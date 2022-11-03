@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EventoService } from 'src/services/evento.service';
 import { Evento } from '../models/Evento';
 
@@ -10,6 +10,7 @@ import { Evento } from '../models/Evento';
   // providers: [EventoService] //uma das formas de injetar o services. Foi deixado descomentando a opcao do app.modules
 })
 export class EventosComponent implements OnInit {
+  public modalRef?: BsModalRef;
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
   public larguraImagem: Number = 150;
@@ -34,7 +35,10 @@ export class EventosComponent implements OnInit {
     );
   }
 
-  constructor(private eventoService: EventoService) {}
+  constructor(
+    private eventoService: EventoService,
+    private modalService: BsModalService
+    ) {}
 
   public ngOnInit(): void {
     this.getEventos();
@@ -53,4 +57,18 @@ export class EventosComponent implements OnInit {
       error: (error: any) => console.log(error)
     });
   }
+
+
+  openModal(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.modalRef?.hide();
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
+  }
+
 }
