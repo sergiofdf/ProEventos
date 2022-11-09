@@ -3,7 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { EventoService } from 'src/services/evento.service';
-import { Evento } from '../models/Evento';
+import { Evento } from '../../models/Evento';
 
 @Component({
   selector: 'app-eventos',
