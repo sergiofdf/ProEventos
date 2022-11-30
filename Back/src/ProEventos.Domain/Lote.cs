@@ -10,6 +10,7 @@ namespace ProEventos.Domain
         public DateTime? DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
         public int Quantidade { get; set; }
+        // [ForeignKey("EventosDetalhes")]
         public int EventoId { get; set; }
         public Evento Evento { get; set; }
     }
