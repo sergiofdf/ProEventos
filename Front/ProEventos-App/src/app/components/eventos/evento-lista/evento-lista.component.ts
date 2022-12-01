@@ -19,6 +19,7 @@ public modalRef?: BsModalRef;
   public margemImagem: Number = 2;
   public exibirImagem: boolean = true;
   private _filtroLista: string = '';
+  public eventoId = 0;
 
   public get filtroLista(): string{
     return this._filtroLista;
@@ -69,7 +70,9 @@ public modalRef?: BsModalRef;
   }
 
 
-  openModal(template: TemplateRef<any>): void {
+  openModal(event: any, template: TemplateRef<any>, eventoId: number): void {
+    event.stopPropagation();
+    this.eventoId = eventoId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
