@@ -9,7 +9,7 @@ import { Constants } from '../util/constants';
 export class DateTimeFormatPipe extends DatePipe implements PipeTransform {
   transform(value: any, args?: any): any {
     const dateMoment: moment.Moment = moment(value, 'DD/MM/YYYY hh:mm:ss');
-    const dateJS: Date = dateMoment.toDate();
+    const dateJS = dateMoment.toDate();
     return super.transform(dateJS, Constants.DATE_TIME_FMT);
   }
 }
