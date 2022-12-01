@@ -23,4 +23,16 @@ public getEventoById(id: number):Observable<Evento>{
   return this.http.get<Evento>(`${this.baseUrl}/${id}`);
 }
 
+public postEvento(evento: Evento):Observable<Evento>{
+  return this.http.post<Evento>(this.baseUrl, evento);
+}
+
+public putEvento(id: number, evento: Evento):Observable<Evento>{
+  return this.http.put<Evento>(`${this.baseUrl}/${id}`, evento);
+}
+
+public deleteEvento(id: number):Observable<any>{
+  return this.http.delete(`${this.baseUrl}/${id}`);
+}
+
 }
