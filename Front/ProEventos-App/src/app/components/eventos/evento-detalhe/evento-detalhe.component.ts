@@ -1,6 +1,7 @@
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AbstractControl } from '@angular/forms';
 import { Lote } from './../../../models/Lote';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -24,10 +25,12 @@ import { LoteService } from '@app/services/lote.service';
   styleUrls: ['./evento-detalhe.component.scss'],
 })
 export class EventoDetalheComponent implements OnInit {
+  modalRef: BsModalRef;
   form!: FormGroup;
   eventoId: number;
   evento = {} as Evento;
   estadoSalvar: string = 'post';
+  loteAtual = {id: 0, nome:'', indice:0};
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -58,7 +61,8 @@ export class EventoDetalheComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private router: Router,
-    private loteService: LoteService
+    private loteService: LoteService,
+    private modalService: BsModalService
   ) {
     this.localeService.use('pt-br');
   }
@@ -176,4 +180,34 @@ export class EventoDetalheComponent implements OnInit {
       this.spinner.hide();
     }
   }
+
+  public removerLote(template: TemplateRef<any>, indice: number): void {
+    this.loteAtual.id = this.lotes.get(indice + '.id').value;
+    this.loteAtual.nome = this.lotes.get(indice + '.nome').value;
+    this.loteAtual.indice = indice;
+
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  public confirmDeleteLote() : void {
+    this.modalRef.hide();
+    this.spinner.show();
+
+    this.loteService.deleteLote(this.eventoId, this.loteAtual.id)
+      .subscribe(
+        () => {
+          this.toastr.success('Lote deletado com sucesso', 'Sucesso');
+          this.lotes.removeAt(this.loteAtual.indice);
+        },
+        (error: any) => {
+          this.toastr.error(`Erro ao tentar deletar lote ${this.loteAtual.id}`, 'Erro');
+          console.error(error);
+        }
+      ).add(() => this.spinner.hide());
+  }
+
+  public declineDeleteLote() : void {
+    this.modalRef.hide();
+  }
+
 }
