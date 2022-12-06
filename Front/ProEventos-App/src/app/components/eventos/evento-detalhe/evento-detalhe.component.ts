@@ -1,3 +1,4 @@
+import { AbstractControl } from '@angular/forms';
 import { Lote } from './../../../models/Lote';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -25,6 +26,10 @@ export class EventoDetalheComponent implements OnInit {
   form!: FormGroup;
   evento = {} as Evento;
   estadoSalvar: string = 'post';
+
+  get modoEditar(): boolean {
+    return this.estadoSalvar === 'put';
+  }
 
   get lotes(): FormArray{
     return this.form.get('lotes') as FormArray;
@@ -121,7 +126,7 @@ export class EventoDetalheComponent implements OnInit {
     this.form.reset();
   }
 
-  public cssValidator(campoForm: FormControl): any {
+  public cssValidator(campoForm: FormControl | AbstractControl): any {
     return { 'is-invalid': campoForm.errors && campoForm.touched };
   }
 
