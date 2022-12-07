@@ -38,4 +38,12 @@ export class EventoService {
   public deleteEvento(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`).pipe(take(1));
   }
+
+  postUpload(eventoId: number, file: File): Observable<Evento> {
+    const fileToUpload = file as File;
+    const formData = new FormData();
+    formData.append('file', fileToUpload);
+
+    return this.http.post<Evento>(`${this.baseUrl}/UploadImage/${eventoId}`, formData).pipe(take(1));
+  }
 }
