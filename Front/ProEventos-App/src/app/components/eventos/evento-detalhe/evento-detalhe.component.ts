@@ -31,7 +31,8 @@ export class EventoDetalheComponent implements OnInit {
   evento = {} as Evento;
   estadoSalvar: string = 'post';
   loteAtual = {id: 0, nome:'', indice:0};
-  imagemURL = '../../../../assets/upoload.png'
+  imagemURL = '../../../../assets/upoload.png';
+  file: File;
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -222,6 +223,15 @@ export class EventoDetalheComponent implements OnInit {
 
   public declineDeleteLote() : void {
     this.modalRef.hide();
+  }
+
+  onFileChange(evento: any): void {
+    const reader = new FileReader();
+
+    reader.onload = (event: any) => this.imagemURL = event.target.result;
+
+    this.file = evento.target.files[0];
+    reader.readAsDataURL(this.file);
   }
 
 }
