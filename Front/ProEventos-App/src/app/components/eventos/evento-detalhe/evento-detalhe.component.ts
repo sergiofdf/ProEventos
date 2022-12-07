@@ -53,6 +53,15 @@ export class EventoDetalheComponent implements OnInit {
     };
   }
 
+  get bsConfigLote(): any {
+    return {
+      adaptivePosition: true,
+      dateInputFormat: 'DD/MM/YYYY',
+      containerClass: 'theme-default',
+      showWeekNumbers: false,
+    };
+  }
+
   constructor(
     private fb: FormBuilder,
     private localeService: BsLocaleService,

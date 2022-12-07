@@ -10,6 +10,7 @@ export class DateTimeFormatPipe extends DatePipe implements PipeTransform {
   transform(value: any, args?: any): any {
     const dateMoment: moment.Moment = moment(value, 'DD/MM/YYYY hh:mm:ss');
     const dateJS = dateMoment.toDate();
+    debugger
     return super.transform(dateJS, Constants.DATE_TIME_FMT);
   }
 }
