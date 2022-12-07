@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Evento } from 'src/app/models/Evento';
@@ -7,7 +8,7 @@ import { take } from 'rxjs/operators';
 @Injectable()
 //{providedIn: 'root'} //uma das formas de injetar o services. Foi deixado descomentando a opcao do app.modules
 export class EventoService {
-  baseUrl = 'https://localhost:5001/api/eventos';
+  baseUrl = environment.apiURL + 'api/eventos';
 
   constructor(private http: HttpClient) {}
 

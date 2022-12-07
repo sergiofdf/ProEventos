@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AbstractControl } from '@angular/forms';
 import { Lote } from './../../../models/Lote';
@@ -90,6 +91,9 @@ export class EventoDetalheComponent implements OnInit {
         (evento: Evento) => {
           this.evento = {...evento};
           this.form.patchValue(this.evento);
+          if(this.evento.imagemURL !== ''){
+            this.imagemURL = environment.apiURL + 'resources/images/' + this.evento.imagemURL;
+          }
           this.evento.lotes.forEach(lote => {
             this.lotes.push(this.criarLote(lote));
           });
@@ -122,7 +126,7 @@ export class EventoDetalheComponent implements OnInit {
       qtdPessoas: ['', [Validators.required, Validators.max(120000)]],
       telefone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      imagemURL: ['', Validators.required],
+      imagemURL: [''],
       lotes: this.fb.array([]),
     });
   }
